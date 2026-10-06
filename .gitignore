@@ -1,0 +1,14 @@
+node_modules
+.next
+out
+.env
+.env.local
+.env*.local
+.vercel
+next-env.d.ts
+*.tsbuildinfo
+.DS_Store
+
+# Raw source photos (78MB+) — not read by the app at runtime; the optimized
+# versions actually used by the site live in public/. Keeps the repo lean.
+Assets

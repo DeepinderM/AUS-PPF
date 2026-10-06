@@ -1,0 +1,191 @@
+@import "tailwindcss";
+
+@theme {
+  --color-charcoal: #1e2321;
+  --color-lime: #6bbf4b;
+  --color-lime-hover: #82cc65;
+  --color-mid: #3f9b3f;
+  --color-deep: #1e5c36;
+  --color-ground: #edefea;
+  --color-muted: #3f4743;
+  --color-panel: #f6f7f3;
+  --color-error: #b3261e;
+
+  --breakpoint-split: 56.25rem; /* 900px; rem so it sorts after sm */
+
+  --radius-brand: 4px;
+}
+
+@theme inline {
+  --font-display: var(--font-archivo), "Arial Black", system-ui, sans-serif;
+  --font-sans: var(--font-public-sans), system-ui, sans-serif;
+}
+
+/* Archivo italic 800, expanded width: echoes the box. */
+@utility display {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 800;
+  font-stretch: 125%;
+  letter-spacing: -0.01em;
+}
+
+@layer base {
+  html {
+    scroll-padding-top: 5rem; /* sticky nav is 72px */
+    background: var(--color-charcoal);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background: var(--color-ground);
+    color: var(--color-charcoal);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* 3px lime ring; the 2px charcoal gap keeps it visible on light surfaces too. */
+  :focus-visible {
+    outline: 3px solid var(--color-lime);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px var(--color-charcoal);
+  }
+}
+
+/* Faint white hexagon lines (~8%) on charcoal. Static; never animated. */
+.hex-pattern {
+  background-color: var(--color-charcoal);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34.64' height='60' viewBox='0 0 34.64 60'%3E%3Cpath d='M17.32 0V10M17.32 10L34.64 20V40L17.32 50L0 40V20Z M17.32 50V60' fill='none' stroke='%23fff' stroke-opacity='.08' stroke-width='1'/%3E%3C/svg%3E");
+  background-size: 34.64px 60px;
+}
+
+/* Hero slabs: three parallelograms leaning "/". */
+.slab {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 34%;
+  clip-path: polygon(40% 0, 100% 0, 60% 100%, 0 100%);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0.75rem 1.5rem;
+  border: 2px solid transparent;
+  border-radius: var(--radius-brand);
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.2;
+  text-align: center;
+  cursor: pointer;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease;
+}
+
+.btn-sm {
+  min-height: 2.75rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.9375rem;
+  white-space: nowrap;
+}
+@media (min-width: 40rem) {
+  .btn-sm {
+    padding-inline: 1.25rem;
+  }
+}
+
+.btn-primary {
+  background: var(--color-lime);
+  border-color: var(--color-lime);
+  color: var(--color-charcoal);
+}
+.btn-primary:hover {
+  background: var(--color-lime-hover);
+  border-color: var(--color-lime-hover);
+}
+.btn-primary:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn-ghost {
+  border-color: #fff;
+  color: #fff;
+}
+.btn-ghost:hover {
+  background: rgb(255 255 255 / 0.12);
+}
+
+/*
+ * Pre-animation states. The inline script in layout.tsx adds `.anim` to <html>
+ * only when JS is running and motion is allowed, so with JS off (or reduced
+ * motion) everything is simply visible. Each component removes the class in
+ * its GSAP setup and takes over with inline styles, so nothing flashes.
+ */
+.anim [data-slab] {
+  transform: translateX(120%);
+}
+.anim [data-line] {
+  transform: translateY(110%);
+}
+.anim [data-fade] {
+  opacity: 0;
+  transform: translateY(16px);
+}
+.anim [data-film-item] {
+  opacity: 0;
+  transform: translateY(24px);
+}
+.anim [data-clip] {
+  clip-path: inset(0 100% 0 0);
+}
+.anim [data-intro-roo] {
+  opacity: 0;
+}
+.anim [data-intro-word] {
+  clip-path: inset(0 100% 0 0);
+}
+.anim [data-trade-item] {
+  opacity: 0;
+  transform: translateY(24px);
+}
+.anim [data-film-visual] {
+  clip-path: inset(0 0 100% 0);
+}
+.anim [data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+}
+.anim [data-page-clip] {
+  clip-path: inset(0 100% 0 0);
+}
+.anim [data-feature] {
+  opacity: 0;
+  transform: translateY(20px);
+}
+.anim [data-htrack-icon] {
+  opacity: 0.25;
+}
+.anim [data-htrack-body] {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* A [PLACEHOLDER] still to be filled in: highlighted so it is easy to find. */
+.ph {
+  background: rgb(107 191 75 / 0.22);
+  border-radius: 2px;
+  padding: 0 0.2em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
